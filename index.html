@@ -29,15 +29,28 @@
       </div>
   <div style="margin-top: 10px;"></div>
     <textarea id="textarea"></textarea>
+    <div class="flex flex-row mt2">
+        <label class='ml2'>
+        Paste existing item blob here.
+          <input id="content" class='ml2'/>
+        </label>
+        <button class='ml2' onClick="setBlob()">Set blob</button>
+    </div>
     <script>
         function minifyAndcopyHTML(){
-            var HTMLBlob = tinymce.get("textarea").getContent().replace(/\<\!--\s*?[^\s?\[][\s\S]*?--\>/g,'').replace(/\>\s*\</g,'><');
+            var HTMLBlob = tinymce.get("textarea").getContent().replace(/\<\!--\s*?[^\s?\[][\s\S]*?--\>/g,'').replace(/\>\s*\</g,'><').replaceAll('"',"'");
             var dummy = document.createElement("textarea");
             document.body.appendChild(dummy);
             dummy.value = HTMLBlob;
             dummy.select();
             document.execCommand("copy");
             document.body.removeChild(dummy);
+        }
+
+        function setBlob(){
+          var blobToSet = document.getElementById("content").value
+          tinymce.get("textarea").setContent(blobToSet)
+          document.getElementById("content").value = ""
         }
     </script>    
   </body>
