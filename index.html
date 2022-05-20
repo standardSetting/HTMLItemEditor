@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #663366;">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tiny.cloud/1/krbqbtn9gx1z6jb276bhosh0f6mu50twr0alrlms9c1kvqr8/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>
+    <script>
+      tinymce.init({
+        paste_data_images: true,
+        height: "700",
+        apiKey: "krbqbtn9gx1z6jb276bhosh0f6mu50twr0alrlms9c1kvqr8",
+        selector: '#textarea',
+        plugins: [
+          'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+          'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+          'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount','code'
+        ],
+        toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+          'alignleft aligncenter alignright alignjustify | ' +
+          'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+      });
+    </script>
+  </head>
+  <body>
+  <h1 class="ml2 white">HTML Item Editor</h1>
+  <button class="ml2 pointer" onClick="minifyAndcopyHTML()">Copy Item Blob</button>
+  <div style="margin-top: 10px;"></div>
+    <textarea id="textarea">Hello, World!</textarea>
+    <script>
+        function minifyAndcopyHTML(){
+            var HTMLBlob = tinymce.get("textarea").getContent().replace(/\<\!--\s*?[^\s?\[][\s\S]*?--\>/g,'').replace(/\>\s*\</g,'><');
+            var dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = HTMLBlob;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+        }
+    </script>    
+  </body>
+
+</html>
