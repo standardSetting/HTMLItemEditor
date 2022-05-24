@@ -28,14 +28,19 @@
           <button class="mr2 h2 mt3 pointer" onClick="minifyAndcopyHTML()">Copy Item Blob</button>
       </div>
   <div style="margin-top: 10px;"></div>
-    <textarea id="textarea"></textarea>
-    <div class="flex flex-row mt2">
+  <textarea id="textarea"></textarea>
+  <div class="flex justify-between">
+    <div class="flex flex-row mt3">
         <label class='ml2 white'>
         Paste existing item blob here.
           <input id="content" class='ml2'/>
         </label>
         <button class='ml2' onClick="setBlob()">Set blob</button>
     </div>
+    <div class='mr2 mt3'>
+      <button onClick="saveItemBlob()">Save Item Blob</button>
+    </div>
+  </div>
     <script>
         function minifyAndcopyHTML(){
             var HTMLBlob = tinymce.get("textarea").getContent().replace(/\<\!--\s*?[^\s?\[][\s\S]*?--\>/g,'').replace(/\>\s*\</g,'><').replaceAll('"',"'");
@@ -51,6 +56,16 @@
           var blobToSet = document.getElementById("content").value
           tinymce.get("textarea").setContent(blobToSet)
           document.getElementById("content").value = ""
+        }
+
+        function saveItemBlob() {
+          var textToSave = tinymce.get("textarea").getContent().replace(/\<\!--\s*?[^\s?\[][\s\S]*?--\>/g,'').replace(/\>\s*\</g,'><').replaceAll('"',"'");
+          var hiddenElement = document.createElement('a');
+
+          hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);
+          hiddenElement.target = '_blank';
+          hiddenElement.download = 'myFile.txt';
+          hiddenElement.click();
         }
     </script>    
   </body>
